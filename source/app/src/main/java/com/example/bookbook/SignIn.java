@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
+import android.view.Window;
 import java.util.HashMap;
 
 import retrofit2.Retrofit;
@@ -20,7 +20,9 @@ public class SignIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_sign_in);
+
 
         //retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
          //       .addConverterFactory(GsonConverterFactory.create()).build();

@@ -56,14 +56,14 @@
         android:layout_marginBottom="320dp"
         android:background="@drawable/my_button"
         android:drawableEnd="@drawable/right_narrow_icon"
+        android:drawableRight="@drawable/right_narrow_icon"
         android:drawablePadding="-5dp"
         android:text="Sign up now"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        android:drawableRight="@drawable/right_narrow_icon" />
+        app:layout_constraintStart_toEndOf="@+id/textView6" />
 
     <View
         android:id="@+id/line2"
@@ -149,14 +149,14 @@
         android:layout_height="66dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="@+id/Line1"
         app:layout_constraintEnd_toStartOf="@+id/textView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/Line2"
         app:layout_constraintTop_toTopOf="@+id/Line2"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/user_icon_2098873_1280"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/user_icon_2098873_1280" />
 
     <ImageView
         android:id="@+id/Logo"
@@ -186,19 +186,19 @@
 
     <Button
         android:id="@+id/ForgetPasswordButton"
-        android:layout_width="169dp"
-        android:layout_height="39dp"
+        android:layout_width="176dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="380dp"
         android:background="@drawable/my_button"
         android:drawableEnd="@drawable/right_narrow_icon"
+        android:drawableRight="@drawable/right_narrow_icon"
         android:drawablePadding="-5dp"
         android:text="Forget password?"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.919"
-        app:layout_constraintStart_toStartOf="parent"
-        android:drawableRight="@drawable/right_narrow_icon" />
+        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editPass"
@@ -214,19 +214,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEmail"
-        app:layout_constraintVertical_bias="0.002" />
+        app:layout_constraintVertical_bias="0.006" />
 
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="188dp"
-        android:layout_height="26dp"
+        android:layout_height="0dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="96dp"
         android:layout_marginRight="96dp"
+        android:layout_weight="1"
         android:background="@drawable/my_text_field"
         android:ems="10"
         android:hint="  Email"
         android:inputType="textEmailAddress"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Line1" />
 
