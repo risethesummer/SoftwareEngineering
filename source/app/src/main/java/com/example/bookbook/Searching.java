@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Vector;
 
 import retrofit2.Call;
@@ -20,18 +21,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Searching extends AppCompatActivity {
-    private List<Movie> list;
+    private List<Movie> list = new ArrayList<>();;
+    private LayoutInflater inflater;
+    private LinearLayout List_viewLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searching);
 
-        list = new ArrayList<>();
+        inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        List_viewLayout = (LinearLayout) findViewById(R.id.SearchList_Layout);
 
-        LayoutInflater inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout List_viewLayout = (LinearLayout) findViewById(R.id.SearchList_Layout);
 
-        View v = inflater.inflate(R.layout.movie_frame, null);
         choose_filter();
     }
 
@@ -77,7 +78,7 @@ public class Searching extends AppCompatActivity {
         });
     }
 
-    List<Movie> execute_searching(Button filter, String data){
+    void execute_searching(Button filter, String data){
         Vector<Movie> result = new Vector<>();
 
         HashMap<String,String> map = new HashMap<>();
@@ -89,6 +90,7 @@ public class Searching extends AppCompatActivity {
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.code() == 200){
                     list = response.body();
+                    Show_movies_list();
                 }
                 else if (response.code() == 404){
                     Toast.makeText(Searching.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
@@ -100,7 +102,13 @@ public class Searching extends AppCompatActivity {
                 Toast.makeText(Searching.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-        return result;
+    }
+
+    void Show_movies_list(){
+        ListIterator<Movie> iterator = list.listIterator();
+        while(iterator.hasNext()){
+            List_viewLayout.addView(iterator.next().create_Frame(inflater));
+        }
     }
 
 }
