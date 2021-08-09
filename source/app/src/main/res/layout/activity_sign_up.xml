@@ -292,7 +292,7 @@
         android:id="@+id/SubmitButton"
         android:layout_width="137dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="56dp"
         android:background="@drawable/my_button"
         android:text="SUBMIT"
         android:textSize="20dp"

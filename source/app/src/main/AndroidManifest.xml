@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookBook"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Searching"></activity>
+        <activity android:name=".Cart"></activity>
+        <activity android:name=".InformationMovie" />
+        <activity android:name=".Searching" />
         <activity android:name=".SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
