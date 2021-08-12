@@ -88,9 +88,9 @@ public class SignUp extends AppCompatActivity {
         map.put("account", username.getText().toString());
         map.put("password", pass.getText().toString());
         map.put("name", name.getText().toString());
-        map.put("Address", Address.getText().toString());
-        map.put("DoB", DoB.getText().toString());
         map.put("email", email.getText().toString());
+        map.put("dayOfBirth", DoB.getText().toString());
+        map.put("address", Address.getText().toString());
 
         Call<Void> call = SignIn.retrofitInterfaceUser.executeSignUp(map);
 

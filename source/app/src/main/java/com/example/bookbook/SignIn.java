@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignIn extends AppCompatActivity {
     public static retrofit2.Retrofit retrofit;
     public static RetrofitInterfaceUser retrofitInterfaceUser;
-    private String BASE_URL = "https://localhost:5001";
+    private String BASE_URL = "https://bookbook3wishes.scm.azurewebsites.net/api";
     public User user = new User();
 
     @Override
@@ -27,10 +27,10 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-               .addConverterFactory(GsonConverterFactory.create()).build();
+        //retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+               //.addConverterFactory(GsonConverterFactory.create()).build();
 
-        retrofitInterfaceUser = retrofit.create(RetrofitInterfaceUser.class);
+        //retrofitInterfaceUser = retrofit.create(RetrofitInterfaceUser.class);
 
         findViewById(R.id.LoginButton).setOnClickListener(new View.OnClickListener() {
             @Override
