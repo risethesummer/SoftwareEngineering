@@ -1,12 +1,16 @@
 package com.example.bookbook;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-public class Movie {
+import static android.support.v4.content.ContextCompat.startActivity;
+
+public class Movie implements Serializable {
     UUID ID;
     String Name;
     int Year;
@@ -31,13 +35,6 @@ public class Movie {
         nation.setText(this.Theaters.toString());
         TextView cinema = (TextView)result.findViewById(R.id.textView_cinema);
         cinema.setText(this.Theaters.toString());
-
-        result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO switch screen to movie page
-            }
-        });
 
         return result;
     };

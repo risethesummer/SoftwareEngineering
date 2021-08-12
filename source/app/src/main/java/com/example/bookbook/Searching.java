@@ -1,12 +1,14 @@
 package com.example.bookbook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -107,7 +109,21 @@ public class Searching extends AppCompatActivity {
     void Show_movies_list(){
         ListIterator<Movie> iterator = list.listIterator();
         while(iterator.hasNext()){
-            List_viewLayout.addView(iterator.next().create_Frame(inflater));
+            Movie movie_info = new Movie();
+            movie_info = iterator.next();
+
+            View Frame_movie = movie_info.create_Frame(inflater);
+            Movie finalMovie_info = movie_info;
+            Frame_movie.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent movie_intent = new Intent(Searching.this, InformationMovie.class);
+                    movie_intent.putExtra("movie", finalMovie_info);
+                    startActivity(movie_intent);
+                }
+            });
+            List_viewLayout.addView(Frame_movie);
         }
     }
 

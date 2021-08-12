@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.704" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/price_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Price:"
@@ -65,7 +65,7 @@
         app:layout_constraintVertical_bias="0.84" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/avail_cinema_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Available theater:"
@@ -80,7 +80,7 @@
         app:layout_constraintVertical_bias="0.768" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date:"
@@ -169,7 +169,7 @@
         app:layout_constraintVertical_bias="0.533" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/movie_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Movie name:"
@@ -215,7 +215,7 @@
         app:layout_constraintVertical_bias="0.989" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/book_button"
         android:layout_width="160dp"
         android:layout_height="48dp"
         android:layout_marginLeft="2dp"
