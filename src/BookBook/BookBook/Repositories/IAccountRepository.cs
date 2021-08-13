@@ -9,9 +9,10 @@ namespace BookBook.Repositories
     public interface IAccountRepository
     {
         bool CreateAccount(UserAccount account);
-        bool CheckLoginAccount(string userName, string password);
         bool CheckAccountExist(string account);
-        void UpdateAccount(UserAccount account);
+        bool UpdateAccount(UserAccount account);
+        bool UpdateAccount(Guid id, byte[] newPassword);
+        UserAccount GetAccount(string account, byte[] password);
         UserAccount GetAccount(Guid id);
         UserAccount GetAccount(string account, string email);
         IEnumerable<UserAccount> GetAccounts();

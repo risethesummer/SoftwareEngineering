@@ -22,17 +22,17 @@ namespace BookBook.Models
         public string Account { get; init; }
 
         [Required, MaxLength(16)]
-        public byte[] Password { get; init; }
+        public byte[] Password { get; set; }
 
         [Required, MaxLength(100)]
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         [EmailAddress, MaxLength(100)]
-        public string Email { get; init; }
+        public string Email { get; set; }
 
-        public DateTime DayOfBirth { get; init; }
+        public DateTime DayOfBirth { get; set; }
 
         [MaxLength(100)]
-        public string Address { get; init; }
+        public string Address { get; set; }
     }
 }

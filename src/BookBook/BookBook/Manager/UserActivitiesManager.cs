@@ -7,31 +7,59 @@ using System.Timers;
 
 namespace BookBook.Manager
 {
-    public class UserActivitiesManager
+    public class UserActivitiesManager : IUserActivitiesManager
     {
         //User ID: The last time they activate
         public readonly Dictionary<Guid, DateTime> onlineUsers = new();
 
-        public UserActivitiesManager()
-        {
-        }
-
         public void ForceLogOutUser()
         {
-            List<Guid> shouldDelete = new();
-            foreach (var user in onlineUsers)
+            while (true)
             {
-                //The last activity is last 1 hour
-                if ((DateTime.Now - user.Value).TotalHours > 1)
+                Queue<Guid> shouldDelete = new();
+
+                foreach (var user in onlineUsers)
                 {
-                    shouldDelete.Add(user.Key);
+                    //The last activity is last 1 hour
+                    if ((DateTime.Now - user.Value).TotalHours > 1)
+                    {
+                        shouldDelete.Enqueue(user.Key);
+                    }
                 }
+
+                while (shouldDelete.Count > 0)
+                    onlineUsers.Remove(shouldDelete.Dequeue());
+
+                //Wait for 1 minutes to check again
+                Thread.Sleep(60000);
             }
+        }
 
-            foreach (var del in shouldDelete)
-                onlineUsers.Remove(del);
+        public void UserActive(Guid id)
+        {
+            if (onlineUsers.ContainsKey(id))
+                onlineUsers[id] = DateTime.Now;
+        }
 
-            Thread.Sleep(60000);
+        public bool AddOnlineUser(Guid id)
+        {
+            //The user has logged in
+            if (onlineUsers.ContainsKey(id))
+            {
+                return false;
+            }
+            onlineUsers.Add(id, DateTime.Now);
+            return true;
+        }
+
+        public void OffUser(Guid id)
+        {
+            onlineUsers.Remove(id);
+        }
+
+        public bool IsOnline(Guid id)
+        {
+            return onlineUsers.ContainsKey(id);
         }
     }
 }

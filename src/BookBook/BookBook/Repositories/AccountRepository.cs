@@ -24,12 +24,6 @@ namespace BookBook.Repositories
             return dbContext.UserAccounts.FirstOrDefault<UserAccount>(acc => acc.Account == account) != null;
         }
 
-        public bool CheckLoginAccount(string account, string password)
-        {
-            byte[] hashPass = MD5.HashData(Encoding.ASCII.GetBytes(password));
-            return dbContext.UserAccounts.FirstOrDefault<UserAccount>(acc => acc.Account == account && acc.Password == hashPass) != null;
-        }
-
         public bool CreateAccount(UserAccount account)
         {
             if (dbContext.UserAccounts.FirstOrDefault(a => a.Account == account.Account) != null)
@@ -49,18 +43,41 @@ namespace BookBook.Repositories
             return dbContext.UserAccounts.FirstOrDefault(acc => acc.Account == account && acc.Email == email);
         }
 
+        public UserAccount GetAccount(string account, byte[] password)
+        {
+            return dbContext.UserAccounts.FirstOrDefault(acc => acc.Account == account && acc.Password == password);
+        }
+
         public IEnumerable<UserAccount> GetAccounts()
         {
             return dbContext.UserAccounts.AsEnumerable();
         }
 
-        public void UpdateAccount(UserAccount account)
+        public bool UpdateAccount(UserAccount account)
         {
-            if (dbContext.UserAccounts.Find(account.ID) != null)
+            var user = dbContext.UserAccounts.Find(account.ID);
+            if (user != null)
             {
-                dbContext.UserAccounts.Update(account);
+                user.Name = account.Name;
+                user.Email = account.Email;
+                user.DayOfBirth = account.DayOfBirth;
+                user.Address = account.Address;
                 dbContext.SaveChanges();
+                return true;
             }
+            return false;
+        }
+
+        public bool UpdateAccount(Guid id, byte[] newPassword)
+        {
+            var user = dbContext.UserAccounts.Find(id);
+            if (user != null)
+            {
+                user.Password = newPassword;
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
