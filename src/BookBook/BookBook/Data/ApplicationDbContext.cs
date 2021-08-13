@@ -24,6 +24,7 @@ namespace BookBook.Data
 
 
         public DbSet<UserAccount> UserAccounts { get; set; }
+        public DbSet<ResetPasswordRequest> ResetPasswordRequests { get; set; }
 
     }
 }

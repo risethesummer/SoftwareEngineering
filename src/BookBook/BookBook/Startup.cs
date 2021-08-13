@@ -9,6 +9,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using BookBook.Repositories;
+using BookBook.Manager;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
+using Azure.Core.Extensions;
+using System;
+using BookBook.Data;
 
 namespace BookBook
 {
@@ -27,12 +34,27 @@ namespace BookBook
             services.AddDbContext<Data.ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            services.AddSingleton(x => new BlobServiceClient(Configuration.GetConnectionString("AzureStorageConnection")));
+            services.AddScoped<IBlobService, BlobService>();
+            services.AddAzureClients(builder =>
+            {
+                builder.AddBlobServiceClient(Configuration["AzureStorageConnection:blob"], preferMsi: true);
+                builder.AddQueueServiceClient(Configuration["AzureStorageConnection:queue"], preferMsi: true);
+            });
+
+            services.AddSingleton<IUserActivitiesManager, UserActivitiesManager>();
+
+            services.AddScoped<IResetPasswordManager, ResetPasswordManager>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IResetPasswordRepository, ResetPasswordRepository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookBook", Version = "v1" });
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +64,11 @@ namespace BookBook
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookBook v1"));
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookBook v1");
+                    c.RoutePrefix = string.Empty;
+                });
+
             }
 
             app.UseHttpsRedirection();
@@ -55,6 +81,31 @@ namespace BookBook
             {
                 endpoints.MapControllers();
             });
+        }
+    }
+    internal static class StartupExtensions
+    {
+        public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddBlobServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddBlobServiceClient(serviceUriOrConnectionString);
+            }
+        }
+        public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddQueueServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddQueueServiceClient(serviceUriOrConnectionString);
+            }
         }
     }
 }

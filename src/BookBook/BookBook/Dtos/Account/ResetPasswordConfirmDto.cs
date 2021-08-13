@@ -6,8 +6,7 @@ namespace BookBook.Dtos
     {
         public record ResetPasswordConfirmDto
         {
-            public Guid ID { get; init; }
-            public string MailCode { get; init; }
+            public int MailCode { get; init; }
         }
     }
 }

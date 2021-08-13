@@ -27,10 +27,10 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        //retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-               //.addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+               .addConverterFactory(GsonConverterFactory.create()).build();
 
-        //retrofitInterfaceUser = retrofit.create(RetrofitInterfaceUser.class);
+        retrofitInterfaceUser = retrofit.create(RetrofitInterfaceUser.class);
 
         findViewById(R.id.LoginButton).setOnClickListener(new View.OnClickListener() {
             @Override

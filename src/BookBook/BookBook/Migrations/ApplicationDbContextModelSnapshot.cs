@@ -19,6 +19,22 @@ namespace BookBook.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BookBook.Models.ResetPasswordRequest", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("ResetPasswordRequests");
+                });
+
             modelBuilder.Entity("BookBook.Models.UserAccount", b =>
                 {
                     b.Property<Guid>("ID")
@@ -58,6 +74,17 @@ namespace BookBook.Migrations
                         .HasName("AlternateKey_Account");
 
                     b.ToTable("UserAccounts");
+                });
+
+            modelBuilder.Entity("BookBook.Models.ResetPasswordRequest", b =>
+                {
+                    b.HasOne("BookBook.Models.UserAccount", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
