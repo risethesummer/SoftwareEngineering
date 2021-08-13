@@ -14,12 +14,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignUp extends AppCompatActivity {
     private TextView date_ofBirth;
@@ -50,7 +57,7 @@ public class SignUp extends AppCompatActivity {
             }
         };
 
-        findViewById(R.id.SignUpButton).setOnClickListener(new View.OnClickListener(){
+        findViewById(R.id.SubmitButton).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 handle_signUp_Dialog();
@@ -75,42 +82,41 @@ public class SignUp extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void handle_signUp_Dialog() {
+    private void handle_signUp_Dialog(){
         final EditText username = findViewById(R.id.UsernameBox);
-        final EditText email = findViewById(R.id.AddressBox);
+        final EditText email = findViewById(R.id.emailBox);
         final EditText pass = findViewById(R.id.PasswordBox);
         final EditText name = findViewById(R.id.FullnameBox);
         final TextView DoB = findViewById(R.id.DoBBox);
         final EditText Address = findViewById(R.id.AddressBox);
 
-        HashMap<String,String> map = new HashMap<>();
+        Map<String, String> postParam= new HashMap<String, String>();
+        postParam.put("account", username.getText().toString());
+        postParam.put("email", email.getText().toString());
+        postParam.put("password", pass.getText().toString());
+        postParam.put("name", name.getText().toString());
+        postParam.put("dayOfBirth", DoB.getText().toString());
+        postParam.put("address", Address.getText().toString());
 
-        map.put("account", username.getText().toString());
-        map.put("password", pass.getText().toString());
-        map.put("name", name.getText().toString());
-        map.put("email", email.getText().toString());
-        map.put("dayOfBirth", DoB.getText().toString());
-        map.put("address", Address.getText().toString());
+        String  url = "https://bookbook3wishes.azurewebsites.net/api/account/register";
 
-        Call<Void> call = SignIn.retrofitInterfaceUser.executeSignUp(map);
-
-        call.enqueue(new Callback<Void>() {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(postParam), new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 200){
-                    Toast.makeText(SignUp.this, "Sign up successfully", Toast.LENGTH_LONG).show();
-                    new Intent(SignUp.this, SignIn.class);
-                }
-                else if (response.code() == 400){
-                    Toast.makeText(SignUp.this, "Email is used", Toast.LENGTH_LONG).show();
+            public void onResponse(JSONObject response) {
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse response = error.networkResponse;
+                if (response.statusCode == 400){
+                    Toast.makeText(SignUp.this, "This account is already logged in", Toast.LENGTH_LONG).show();
                 }
             }
+        }
+        );
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(SignUp.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        MySingleton.getInstance(SignUp.this).addToRequestQueue(req);
     }
 
 }

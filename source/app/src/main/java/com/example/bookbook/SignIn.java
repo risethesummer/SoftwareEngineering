@@ -3,34 +3,43 @@ package com.example.bookbook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.HashMap;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.DataInput;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignIn extends AppCompatActivity {
-    public static retrofit2.Retrofit retrofit;
-    public static RetrofitInterfaceUser retrofitInterfaceUser;
-    private String BASE_URL = "https://bookbook3wishes.scm.azurewebsites.net/api";
-    public User user = new User();
+
+    private static final String TAG = "SignIn";
+    public static User user = new User();
+    private boolean is_logged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        //retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-               //.addConverterFactory(GsonConverterFactory.create()).build();
-
-        //retrofitInterfaceUser = retrofit.create(RetrofitInterfaceUser.class);
+        is_logged = false;
 
         findViewById(R.id.LoginButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,28 +59,40 @@ public class SignIn extends AppCompatActivity {
     private void handle_loginDialog() {
         final EditText email = findViewById(R.id.editUsername);
         final EditText pass = findViewById(R.id.editPass);
-        HashMap<String,String> map = new HashMap<>();
 
-        map.put("username", email.getText().toString());
-        map.put("password", pass.getText().toString());
-        Call<User> call = retrofitInterfaceUser.executeLogin(map);
+        Map<String, String> postParam= new HashMap<String, String>();
+        postParam.put("account", email.getText().toString());
+        postParam.put("password", pass.getText().toString());
 
-        call.enqueue(new Callback<User>() {
+        String  url = "https://bookbook3wishes.azurewebsites.net/api/account/login";
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(postParam), new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.code() == 200){
-                    user = response.body();
-                    startActivity(new Intent(SignIn.this, MainActivity.class));
+            public void onResponse(JSONObject response) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    user = objectMapper.readValue(response.toString(), User.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                else if (response.code() == 404){
-                    Toast.makeText(SignIn.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
+                Toast.makeText(SignIn.this, response.toString(),Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignIn.this, MainActivity.class));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // As of f605da3 the following should work
+                NetworkResponse response = error.networkResponse;
+                if (response.statusCode == 400){
+                    Toast.makeText(SignIn.this, "This account is already logged in", Toast.LENGTH_LONG).show();
                 }
             }
+        }
+        );
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(SignIn.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        MySingleton.getInstance(SignIn.this).addToRequestQueue(req);
+
     }
+
 }

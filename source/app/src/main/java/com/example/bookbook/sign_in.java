@@ -1,5 +1,4 @@
 package com.example.bookbook;
-import com.google.gson.annotations.SerializedName;
 
 public class sign_in {
     private String email;
