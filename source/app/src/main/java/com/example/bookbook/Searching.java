@@ -12,15 +12,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Vector;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Searching extends AppCompatActivity {
     private List<Movie> list = new ArrayList<>();;
@@ -46,7 +46,13 @@ public class Searching extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Button button = (Button)v;
-                execute_searching(button, search_box.getText().toString());
+                try {
+                    execute_searching(button, search_box.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -54,56 +60,60 @@ public class Searching extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Button button = (Button)v;
-                execute_searching(button, search_box.getText().toString());
+                try {
+                    execute_searching(button, search_box.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
         findViewById(R.id.button_byActor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button button = (Button)v;
-                execute_searching(button, search_box.getText().toString());
+                try {
+                    execute_searching(button, search_box.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
         findViewById(R.id.button_byGenre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button button = (Button)v;
-                execute_searching(button, search_box.getText().toString());
+                try {
+                    execute_searching(button, search_box.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
         findViewById(R.id.button_byTheatre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button button = (Button)v;
-                execute_searching(button, search_box.getText().toString());
+                try {
+                    execute_searching(button, search_box.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    void execute_searching(Button filter, String data){
+    void execute_searching(Button filter, String data) throws IOException, JSONException {
         Vector<Movie> result = new Vector<>();
 
-        HashMap<String,String> map = new HashMap<>();
-        map.put(filter.getText().toString(), data);
-        Call<List<Movie>> call = SignIn.retrofitInterfaceUser.executeSearching_name(map);
 
-        call.enqueue(new Callback<List<Movie>>() {
-            @Override
-            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-                if (response.code() == 200){
-                    list = response.body();
-                    Show_movies_list();
-                }
-                else if (response.code() == 404){
-                    Toast.makeText(Searching.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Movie>> call, Throwable t) {
-                Toast.makeText(Searching.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     void Show_movies_list(){

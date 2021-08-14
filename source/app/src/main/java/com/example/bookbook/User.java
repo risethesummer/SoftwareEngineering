@@ -1,40 +1,71 @@
 package com.example.bookbook;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.widget.ArrayAdapter;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.UUID;
 
-
-import retrofit2.Call;
 
 public class User {
-    private String ID;
+    private UUID id;
     private String name;
-    private String DoB;
-    private String Address;
-    private String Email;
+    private String dayOfBirth;
+    private String address;
+    private String email;
 
     private HashMap<String,String> putData(){
         HashMap<String,String> map = new HashMap<>();
-        map.put("ID", this.ID);
-        map.put("Email", this.Email);
+        map.put("ID", this.id.toString());
+        map.put("Email", this.email);
         map.put("name", this.name);
-        map.put("DoB", this.DoB);
-        map.put("Address", this.Address);
+        map.put("DoB", this.dayOfBirth);
+        map.put("Address", this.address);
         return map;
     };
 
+    public String getId() {
+        return id.toString();
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    public void setDayOfBirth(String dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     private List<String> View_info(){
         List<String> info = new ArrayList<String>();
-        info.add(ID); info.add(Email); info.add(name); info.add(DoB);info.add(Address);
+        info.add(id.toString()); info.add(email); info.add(name); info.add(dayOfBirth);info.add(address);
         return info;
     }
 }
