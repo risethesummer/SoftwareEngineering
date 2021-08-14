@@ -30,7 +30,8 @@ namespace BookBook.Models
         [EmailAddress, MaxLength(100)]
         public string Email { get; set; }
 
-        public DateTime DayOfBirth { get; set; }
+        [MaxLength(20)]
+        public string DayOfBirth { get; set; }
 
         [MaxLength(100)]
         public string Address { get; set; }

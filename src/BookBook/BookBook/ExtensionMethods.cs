@@ -9,11 +9,11 @@ namespace BookBook
 {
     public static class ExtensionMethods
     {
-        public static UserAccountDto AsDto (this UserAccount user)
+        public static UserSessionDto AsDto (this UserAccount user, Guid sesId)
         {
-            return new UserAccountDto()
+            return new UserSessionDto()
             { 
-                ID = user.ID,
+                SessionID = sesId,
                 Account = user.Account,
                 Name = user.Name,
                 Email = user.Email,

@@ -34,7 +34,7 @@ namespace BookBook.Controllers
             {
                 var newUser = new UserAccount()
                 {
-                    ID = new Guid(),
+                    ID = Guid.NewGuid(),
                     Account = createDto.Account,
                     Email = createDto.Email,
                     Address = createDto.Address,
@@ -56,8 +56,11 @@ namespace BookBook.Controllers
         {
             var password = MD5.HashData(Encoding.ASCII.GetBytes(loginDto.Password));
             var user = repository.GetAccount(loginDto.Account, password);
-            if (user != null && activitiesManager.AddOnlineUser(user.ID))
-                return new JsonResult(user);
+            if (user != null)
+            {
+                Guid sesionID = activitiesManager.AddOnlineUser(user.ID);
+                return new JsonResult(user.AsDto(sesionID));
+            }
             return BadRequest();
         }
 
@@ -70,34 +73,39 @@ namespace BookBook.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<UserAccountDto> GetAccounts()
+        public IEnumerable<UserSessionDto> GetAccounts()
         {
             foreach (var account in repository.GetAccounts())
-                yield return account.AsDto();
+                yield return account.AsDto(new());
         }
 
         //PUT
         [HttpPut("{id}")]
         public ActionResult UpdateAccount(Guid id, UpdateAccountDto update)
         {
-            var userInDb = repository.GetAccount(id);
-
-            if (repository.GetAccount(id) == null)
-                return NotFound();
-
-            activitiesManager.UserActive(id);
-
-            UserAccount updateUser = userInDb with
+            if (activitiesManager.IsValidSession(id))
             {
-                Name = update.Name,
-                Email = update.Email,
-                DayOfBirth = update.DayOfBirth,
-                Address = update.Address
-            };
+                var userId = activitiesManager.GetUserId(id);
 
-            repository.UpdateAccount(updateUser);
+                var userInDb = repository.GetAccount(userId);
 
-            return Ok();
+                if (repository.GetAccount(userId) == null)
+                    return BadRequest();
+
+                UserAccount updateUser = userInDb with
+                {
+                    Name = update.Name,
+                    Email = update.Email,
+                    DayOfBirth = update.DayOfBirth,
+                    Address = update.Address
+                };
+
+                repository.UpdateAccount(updateUser);
+
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         // POST /reset
@@ -107,7 +115,7 @@ namespace BookBook.Controllers
             var user = repository.GetAccount(resetDto.Account, resetDto.Email);
             if (user != null && resetPasswordManager.AddRequest(user.ID, user.Email))
                 return Content(user.ID.ToString());
-            return BadRequest("The account or email do not exist");
+            return BadRequest();
         }
 
         // DELETE /reset
@@ -119,6 +127,7 @@ namespace BookBook.Controllers
             return BadRequest();
         }
 
+        // PUT /reset
         [HttpPut("reset/{id}")]
         public ActionResult ChangeNewPassword(Guid id, string newPassword)
         {

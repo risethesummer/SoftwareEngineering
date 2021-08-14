@@ -51,8 +51,9 @@ namespace BookBook.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("DayOfBirth")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DayOfBirth")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
