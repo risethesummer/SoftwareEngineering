@@ -112,6 +112,12 @@ public class SignUp extends AppCompatActivity {
                 if (response.statusCode == 400){
                     Toast.makeText(SignUp.this, "This account is already logged in", Toast.LENGTH_LONG).show();
                 }
+                if (response.statusCode == 403){
+                    Toast.makeText(SignUp.this, "The server is closed", Toast.LENGTH_LONG).show();
+                }
+                if (response.statusCode == 408){
+                    Toast.makeText(SignUp.this, "Request timed out", Toast.LENGTH_LONG).show();
+                }
             }
         }
         );

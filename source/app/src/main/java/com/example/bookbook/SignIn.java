@@ -32,14 +32,11 @@ public class SignIn extends AppCompatActivity {
 
     private static final String TAG = "SignIn";
     public static User user = new User();
-    private boolean is_logged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
-        is_logged = false;
 
         findViewById(R.id.LoginButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +49,13 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SignIn.this, SignUp.class));
+            }
+        });
+
+        findViewById(R.id.ForgetPasswordButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignIn.this, AccountSetting.class));
             }
         });
     }
@@ -76,6 +80,7 @@ public class SignIn extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Toast.makeText(SignIn.this, response.toString(),Toast.LENGTH_SHORT).show();
+                finish();
                 startActivity(new Intent(SignIn.this, MainActivity.class));
             }
         }, new Response.ErrorListener() {
@@ -86,6 +91,9 @@ public class SignIn extends AppCompatActivity {
                 NetworkResponse response = error.networkResponse;
                 if (response.statusCode == 400){
                     Toast.makeText(SignIn.this, "This account is already logged in", Toast.LENGTH_LONG).show();
+                }
+                if (response.statusCode == 403){
+                    Toast.makeText(SignIn.this, "The server is closed", Toast.LENGTH_LONG).show();
                 }
             }
         }
