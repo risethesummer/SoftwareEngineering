@@ -17,6 +17,7 @@ public class AccountSetting extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(AccountSetting.this, "Clicked", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 }

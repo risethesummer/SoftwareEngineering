@@ -1,14 +1,12 @@
 package com.example.bookbook;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,10 +17,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,25 +101,23 @@ public class SignUp extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(postParam), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                finish();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse response = error.networkResponse;
+                if (response == null){
+                    Toast.makeText(SignUp.this, "Register successfully", Toast.LENGTH_LONG).show();
+                    finish();
+                }
                 if (response.statusCode == 400){
                     Toast.makeText(SignUp.this, "This account is already logged in", Toast.LENGTH_LONG).show();
                 }
-                if (response.statusCode == 403){
+                else if (response.statusCode == 403){
                     Toast.makeText(SignUp.this, "The server is closed", Toast.LENGTH_LONG).show();
                 }
-                if (response.statusCode == 408){
-                    Toast.makeText(SignUp.this, "Request timed out", Toast.LENGTH_LONG).show();
-                }
             }
-        }
-        );
-
+        });
         MySingleton.getInstance(SignUp.this).addToRequestQueue(req);
     }
 

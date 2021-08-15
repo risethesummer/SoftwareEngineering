@@ -113,7 +113,6 @@ public class Searching extends AppCompatActivity {
     void execute_searching(Button filter, String data) throws IOException, JSONException {
         Vector<Movie> result = new Vector<>();
 
-
     }
 
     void Show_movies_list(){
@@ -127,7 +126,6 @@ public class Searching extends AppCompatActivity {
             Frame_movie.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent movie_intent = new Intent(Searching.this, InformationMovie.class);
                     movie_intent.putExtra("movie", finalMovie_info);
                     startActivity(movie_intent);
@@ -136,5 +134,4 @@ public class Searching extends AppCompatActivity {
             List_viewLayout.addView(Frame_movie);
         }
     }
-
 }

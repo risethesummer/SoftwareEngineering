@@ -79,7 +79,7 @@ public class SignIn extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(SignIn.this, response.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignIn.this, "Login successfully",Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(new Intent(SignIn.this, MainActivity.class));
             }
@@ -98,9 +98,7 @@ public class SignIn extends AppCompatActivity {
             }
         }
         );
-
         MySingleton.getInstance(SignIn.this).addToRequestQueue(req);
-
     }
 
 }
