@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookBook"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ResetPassword"></activity>
+        <activity android:name=".ReportBug"></activity>
+        <activity android:name=".ChangePW_Change" />
+        <activity android:name=".ChangePW_Forget" />
+        <activity android:name=".ResetPassword" />
         <activity android:name=".AccountSetting" />
         <activity android:name=".Cart" />
         <activity android:name=".InformationMovie" />
