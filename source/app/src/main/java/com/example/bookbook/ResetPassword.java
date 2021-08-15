@@ -40,15 +40,15 @@ public class ResetPassword extends AppCompatActivity {
         EditText username = (EditText) findViewById(R.id.recover_pass_username_text);
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("Account",username.getText().toString());
-        params.put("Email",email.getText().toString());
+        params.put("account",username.getText().toString());
+        params.put("email",email.getText().toString());
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL_base, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Toast.makeText(ResetPassword.this,response.toString(),Toast.LENGTH_LONG).show();
                 try {
-                    if (response.get("State").equals("Success")) {
+                    if (response.get("state").equals("Success")) {
                         confirm_passcode(response.get("ID").toString());
                     }
                 } catch (JSONException e) {
@@ -85,13 +85,13 @@ public class ResetPassword extends AppCompatActivity {
         String url = URL_base + '/' + ID;
         EditText passcode = (EditText) findViewById(R.id.passcode_editText);
         HashMap<String,String> params = new HashMap<>();
-        params.put("MailCode", passcode.getText().toString());
+        params.put("mailCode", passcode.getText().toString());
 
         JsonRequest req = new JsonObjectRequest(Request.Method.DELETE, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if (response.get("State").equals("Success"))
+                    if (response.get("state").equals("Success"))
                         create_newPassword(url);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -126,13 +126,13 @@ public class ResetPassword extends AppCompatActivity {
 
     private void send_newPassword(String url , String new_password){
         HashMap<String,String> params = new HashMap<>();
-        params.put("NewPassword", new_password);
+        params.put("newPassword", new_password);
 
         JsonRequest req  = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if (response.get("State").equals("Success")){
+                    if (response.get("state").equals("Success")){
                         Toast.makeText(ResetPassword.this, "Change password successfully", Toast.LENGTH_LONG).show();
                         finish();
                     }

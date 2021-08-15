@@ -103,7 +103,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if(response.get("State").equals("Success")){
+                    if(response.get("state").equals("Success")){
                         Toast.makeText(SignUp.this, "Register successfully", Toast.LENGTH_LONG).show();
                         finish();
                     }
