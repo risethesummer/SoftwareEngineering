@@ -6,6 +6,7 @@ using BookBook.Models;
 using System.Security.Cryptography;
 using System.Text;
 using BookBook.Manager;
+using BookBook.Dtos;
 using System.Collections.Generic;
 
 namespace BookBook.Controllers
@@ -44,10 +45,10 @@ namespace BookBook.Controllers
                 };
 
                 repository.CreateAccount(newUser);
-                return Ok();
+                return Ok(new JsonResponse() { State = "Success" });
             }
 
-            return BadRequest();
+            return BadRequest(new JsonResponse() { State = "Fail" });
         }
 
         // POST /login
@@ -61,7 +62,7 @@ namespace BookBook.Controllers
                 Guid sesionID = activitiesManager.AddOnlineUser(user.ID);
                 return new JsonResult(user.AsDto(sesionID));
             }
-            return BadRequest();
+            return BadRequest(new JsonResponse() { State = "Fail" });
         }
 
         //GET /logout/id
@@ -102,10 +103,10 @@ namespace BookBook.Controllers
 
                 repository.UpdateAccount(updateUser);
 
-                return Ok();
+                return Ok(new JsonResponse() { State = "Success" });
             }
 
-            return BadRequest();
+            return BadRequest(new JsonResponse() { State = "Fail" });
         }
 
         // POST /reset
@@ -115,7 +116,7 @@ namespace BookBook.Controllers
             var user = repository.GetAccount(resetDto.Account, resetDto.Email);
             if (user != null && resetPasswordManager.AddRequest(user.ID, user.Email))
                 return Content(user.ID.ToString());
-            return BadRequest();
+            return BadRequest(new JsonResponse() { State = "Fail" });
         }
 
         // DELETE /reset
@@ -123,8 +124,8 @@ namespace BookBook.Controllers
         public ActionResult ResetPasswordConfirm(Guid id, int confirmCode)
         {
             if (resetPasswordManager.ConfirmMailCode(id, confirmCode))
-                return Ok();
-            return BadRequest();
+                return Ok(new JsonResponse() { State = "Success" });
+            return BadRequest(new JsonResponse() { State = "Fail" });
         }
 
         // PUT /reset
@@ -133,8 +134,8 @@ namespace BookBook.Controllers
         {
             var password = MD5.HashData(Encoding.ASCII.GetBytes(newPassword));
             if (repository.UpdateAccount(id, password))
-                return Ok();
-            return BadRequest();
+                return Ok(new JsonResponse() { State = "Success" });
+            return BadRequest(new JsonResponse() { State = "Fail" });
         }
     }
 }
