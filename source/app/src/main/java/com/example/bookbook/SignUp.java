@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -101,17 +102,21 @@ public class SignUp extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(postParam), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                try {
+                    if(response.get("State").equals("Success")){
+                        Toast.makeText(SignUp.this, "Register successfully", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse response = error.networkResponse;
-                if (response == null){
-                    Toast.makeText(SignUp.this, "Register successfully", Toast.LENGTH_LONG).show();
-                    finish();
-                }
                 if (response.statusCode == 400){
-                    Toast.makeText(SignUp.this, "This account is already logged in", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUp.this, "This username already has", Toast.LENGTH_LONG).show();
                 }
                 else if (response.statusCode == 403){
                     Toast.makeText(SignUp.this, "The server is closed", Toast.LENGTH_LONG).show();

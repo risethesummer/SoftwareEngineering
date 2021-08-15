@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2617B">
+
+    <View
+        android:id="@+id/line18"
+        android:layout_width="412dp"
+        android:layout_height="1dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <ImageView
+        android:id="@+id/imageView34"
+        android:layout_width="303dp"
+        android:layout_height="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/bookbook_logo_3" />
+
+    <FrameLayout
+        android:layout_width="374dp"
+        android:layout_height="222dp"
+        android:background="@drawable/my_frame_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.245">
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/tienne"
+            android:text="Enter Passcode"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/passcode_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/my_text_field"
+            android:ems="10"
+            android:fontFamily="@font/tienne"
+            android:hint="passcode"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/passcode_confirm_button"
+            android:layout_width="107dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/my_button"
+            android:drawableRight="@drawable/right_narrow_icon"
+            android:fontFamily="@font/tienne"
+            android:text="Confirm"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView35"
+            android:layout_width="67dp"
+            android:layout_height="61dp"
+            android:layout_gravity="bottom|right"
+            app:srcCompat="@drawable/bookbook_icon" />
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

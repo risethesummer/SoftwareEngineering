@@ -55,7 +55,7 @@ public class SignIn extends AppCompatActivity {
         findViewById(R.id.ForgetPasswordButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignIn.this, AccountSetting.class));
+                startActivity(new Intent(SignIn.this, ResetPassword.class));
             }
         });
     }

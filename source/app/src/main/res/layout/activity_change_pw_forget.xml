@@ -11,69 +11,80 @@
         android:id="@+id/view8"
         android:layout_width="388dp"
         android:layout_height="226dp"
-        android:layout_marginBottom="312dp"
         android:background="#F6F5D4"
         android:foregroundGravity="bottom|clip_vertical|right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.304"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.388" />
 
     <TextView
-        android:id="@+id/EnterNewPassword"
+        android:id="@+id/EnterNewPassword_forget"
         android:layout_width="193dp"
         android:layout_height="24dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="468dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/my_text_field"
+        android:fontFamily="@font/tienne"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.332" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="472dp"
+        android:fontFamily="@font/tienne"
         android:text="Enter new password"
         android:textColor="#000000"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.33" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="412dp"
-        android:text="Enter password again"
+        android:fontFamily="@font/tienne"
+        android:text="Re-enter password"
         android:textColor="#000000"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="341dp"
         android:layout_height="46dp"
-        android:foregroundGravity="left|fill_vertical"
+        android:fontFamily="@font/tienne"
+        android:gravity="center"
         android:text="Change password"
         android:textColor="#000000"
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.627"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169" />
+        app:layout_constraintVertical_bias="0.154" />
 
     <View
         android:id="@+id/line10"
@@ -109,44 +120,54 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.234" />
+        app:layout_constraintVertical_bias="0.23" />
 
     <TextView
-        android:id="@+id/EnterPasswordAgain"
+        android:id="@+id/EnterPasswordAgain_forget"
         android:layout_width="193dp"
         android:layout_height="24dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="408dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/my_text_field"
+        android:fontFamily="@font/tienne"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.417" />
 
     <Button
-        android:id="@+id/Confirm"
+        android:id="@+id/Confirm_pwd_forget"
         android:layout_width="116dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginRight="144dp"
-        android:layout_marginBottom="320dp"
-        android:background="#F15F5F"
-        android:foreground="@drawable/right_narrow_icon"
-        android:foregroundGravity="center_vertical|clip_vertical|right"
+        android:background="@drawable/my_button"
+        android:drawableRight="@drawable/right_narrow_icon"
+        android:drawablePadding="-10dp"
+        android:fontFamily="@font/tienne"
+        android:paddingRight="10dp"
         android:text="Confirm"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.536" />
 
     <ImageView
         android:id="@+id/imageView25"
         android:layout_width="56dp"
         android:layout_height="54dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="308dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.926"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.527"
         app:srcCompat="@drawable/bookbook_icon" />
 
 </android.support.constraint.ConstraintLayout>
