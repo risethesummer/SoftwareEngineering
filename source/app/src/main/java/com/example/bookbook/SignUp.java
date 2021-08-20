@@ -5,7 +5,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -56,9 +60,32 @@ public class SignUp extends AppCompatActivity {
             }
         };
 
+        EditText re_enterPwd = findViewById(R.id.ReEnterPasswordBox);
+        re_enterPwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                EditText pass = findViewById(R.id.PasswordBox);
+                if (!hasFocus){
+                    TextView alert_text = findViewById(R.id.pwd_alert_signup);
+                    if(!re_enterPwd.getText().toString().equals(pass.getText().toString())){ alert_text.setVisibility(View.VISIBLE); }
+                    else { alert_text.setVisibility(View.INVISIBLE); }
+                }
+            }
+        });
+
+
         findViewById(R.id.SubmitButton).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                EditText username = findViewById(R.id.UsernameBox);
+                EditText pass = findViewById(R.id.PasswordBox);
+
+                String a = username.getText().toString();
+                String b = pass.getText().toString();
+                if(a.equals("") || b.equals("")){
+                    Toast.makeText(SignUp.this, "Username/Password is empty", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 handle_signUp_Dialog();
             }
         });

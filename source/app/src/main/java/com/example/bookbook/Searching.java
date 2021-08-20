@@ -3,6 +3,7 @@ package com.example.bookbook;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,7 +44,6 @@ public class Searching extends AppCompatActivity {
         inflater = (LayoutInflater)getBaseContext() .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         List_viewLayout = (LinearLayout) findViewById(R.id.SearchList_Layout);
 
-
         choose_filter();
     }
 
@@ -45,9 +54,8 @@ public class Searching extends AppCompatActivity {
         findViewById(R.id.button_byName).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button = (Button)v;
                 try {
-                    execute_searching(button, search_box.getText().toString());
+                    execute_searching("by_name", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -59,22 +67,21 @@ public class Searching extends AppCompatActivity {
         findViewById(R.id.button_byNation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button = (Button)v;
                 try {
-                    execute_searching(button, search_box.getText().toString());
+                    execute_searching("by_nation", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         });
         findViewById(R.id.button_byActor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button = (Button)v;
                 try {
-                    execute_searching(button, search_box.getText().toString());
+                    execute_searching("by_actor", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -85,9 +92,8 @@ public class Searching extends AppCompatActivity {
         findViewById(R.id.button_byGenre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button = (Button)v;
                 try {
-                    execute_searching(button, search_box.getText().toString());
+                    execute_searching("by_genre", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -98,9 +104,8 @@ public class Searching extends AppCompatActivity {
         findViewById(R.id.button_byTheatre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button = (Button)v;
                 try {
-                    execute_searching(button, search_box.getText().toString());
+                    execute_searching("by_theatre", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -110,9 +115,35 @@ public class Searching extends AppCompatActivity {
         });
     }
 
-    void execute_searching(Button filter, String data) throws IOException, JSONException {
+    void execute_searching(String filter, String data) throws IOException, JSONException {
         Vector<Movie> result = new Vector<>();
+        String url = "/" + filter;
 
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                for (int i= 0; i < response.length(); i++){
+                    try {
+                        list.add(objectMapper.readValue(response.getString(i), Movie.class));
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Show_movies_list();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse response = error.networkResponse;
+                if (response.statusCode == 400){
+                    Toast.makeText(Searching.this, "This account is already logged in", Toast.LENGTH_LONG).show();
+                }
+                if (response.statusCode == 403){
+                    Toast.makeText(Searching.this, "The server is closed", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     void Show_movies_list(){
@@ -121,7 +152,9 @@ public class Searching extends AppCompatActivity {
             Movie movie_info = new Movie();
             movie_info = iterator.next();
 
-            View Frame_movie = movie_info.create_Frame(inflater);
+            View Frame_movie = movie_info.create_Frame(inflater, Searching.this);
+            Frame_movie.setId(ViewCompat.generateViewId());
+
             Movie finalMovie_info = movie_info;
             Frame_movie.setOnClickListener(new View.OnClickListener() {
                 @Override

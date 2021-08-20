@@ -13,17 +13,6 @@ public class User {
     private String dayOfBirth;
     private String address;
 
-
-    private HashMap<String,String> putData(){
-        HashMap<String,String> map = new HashMap<>();
-        map.put("ID", this.sessionID);
-        map.put("Email", this.email);
-        map.put("name", this.name);
-        map.put("DoB", this.dayOfBirth);
-        map.put("Address", this.address);
-        return map;
-    };
-
     public String getSessionID() {
         return sessionID.toString();
     }
