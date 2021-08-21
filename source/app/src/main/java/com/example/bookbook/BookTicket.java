@@ -9,12 +9,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class BookTicket extends AppCompatActivity {
     private  Movie info;
     private  TextView show_time_textBox;
     private  TextView cinema_textBox;
+    private  String Theater_ID;
+    private DateTimeFormatter dateTimeFormatter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +51,9 @@ public class BookTicket extends AppCompatActivity {
             public void onClick(View v) {
                 if (cinema_textBox.getText().toString() != "Cinema"
                  && show_time_textBox.getText().toString() != "Date"){
-                    startActivity(new Intent());
+                    Intent choose_seat = new Intent(BookTicket.this, ChooseSeat.class);
+                    //TODO transfer ticket
+                    startActivity(choose_seat);
                 }
             }
         });
@@ -57,7 +63,14 @@ public class BookTicket extends AppCompatActivity {
     private void choose_cinema(){
 
         String[] List_items;
-        List_items = (String[]) info.Theaters.toArray();
+        ArrayList<String> list = new ArrayList<>();
+
+        for (int i = 0; i < info.Theaters.size(); i++){
+            list.add(info.Theaters.get(i).name);
+        }
+
+        List_items = list.toArray(new String[0]);
+
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(BookTicket.this);
         mBuilder.setTitle("Choose a cinema");
         mBuilder.setSingleChoiceItems(List_items, -1, new DialogInterface.OnClickListener() {
@@ -67,6 +80,7 @@ public class BookTicket extends AppCompatActivity {
                 if (which == -1){
                     show_time_textBox.setText("Date");
                 }
+                Theater_ID = info.Theaters.get(which).id;
                 dialog.dismiss();
             }
         });

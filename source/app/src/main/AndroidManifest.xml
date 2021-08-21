@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookBook"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BookTicket"></activity>
+        <activity android:name=".ChooseSeat"></activity>
+        <activity android:name=".BookTicket" />
         <activity android:name=".ReportBug" />
         <activity android:name=".ChangePW_Change" />
         <activity android:name=".ChangePW_Forget" />

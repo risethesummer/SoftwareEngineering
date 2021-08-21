@@ -117,6 +117,7 @@ public class Searching extends AppCompatActivity {
 
     void execute_searching(String filter, String data) throws IOException, JSONException {
         Vector<Movie> result = new Vector<>();
+        //TODO add searching url
         String url = "/" + filter;
 
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -144,6 +145,8 @@ public class Searching extends AppCompatActivity {
                 }
             }
         });
+
+        //TODO MySingleTon
     }
 
     void Show_movies_list(){
