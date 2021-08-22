@@ -30,15 +30,12 @@ import java.util.Map;
 
 public class SignIn extends AppCompatActivity {
 
-    private static final String TAG = "SignIn";
     public static User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
-        startActivity(new Intent(SignIn.this, MainActivity.class));
 
         findViewById(R.id.LoginButton).setOnClickListener(new View.OnClickListener() {
             @Override

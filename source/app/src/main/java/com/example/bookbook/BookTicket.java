@@ -2,6 +2,7 @@ package com.example.bookbook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,20 +12,21 @@ import android.widget.Toast;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookTicket extends AppCompatActivity {
-    private  Movie info;
+    private  ArrayList<Ticket> all_tickets;
     private  TextView show_time_textBox;
     private  TextView cinema_textBox;
     private  String Theater_ID;
-    private DateTimeFormatter dateTimeFormatter;
+    private Ticket chosen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_ticket);
 
-        info = (Movie) getIntent().getSerializableExtra("movie");
+        all_tickets = (ArrayList<Ticket>) getIntent().getSerializableExtra("Tickets");
 
         cinema_textBox = findViewById(R.id.listbox_theater_booking);
         cinema_textBox.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +54,9 @@ public class BookTicket extends AppCompatActivity {
                 if (cinema_textBox.getText().toString() != "Cinema"
                  && show_time_textBox.getText().toString() != "Date"){
                     Intent choose_seat = new Intent(BookTicket.this, ChooseSeat.class);
-                    //TODO transfer ticket
+                    choose_seat.putExtra("ticket", chosen);
+                    choose_seat.putExtra("theater", Theater_ID);
+                    finish();
                     startActivity(choose_seat);
                 }
             }
@@ -63,13 +67,13 @@ public class BookTicket extends AppCompatActivity {
     private void choose_cinema(){
 
         String[] List_items;
-        ArrayList<String> list = new ArrayList<>();
-
-        for (int i = 0; i < info.Theaters.size(); i++){
-            list.add(info.Theaters.get(i).name);
+        List<Theater> list = all_tickets.get(0).getTheaters();
+        ArrayList<String> theater_list = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++){
+            theater_list.add(list.get(i).getName());
         }
 
-        List_items = list.toArray(new String[0]);
+        List_items = theater_list.toArray(new String[0]);
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(BookTicket.this);
         mBuilder.setTitle("Choose a cinema");
@@ -80,7 +84,9 @@ public class BookTicket extends AppCompatActivity {
                 if (which == -1){
                     show_time_textBox.setText("Date");
                 }
-                Theater_ID = info.Theaters.get(which).id;
+
+                Theater_ID = list.get(which).id;
+                show_time_textBox.setEnabled(true);
                 dialog.dismiss();
             }
         });
@@ -98,13 +104,29 @@ public class BookTicket extends AppCompatActivity {
 
     private void choose_showtime() {
         String[] List_items;
-        List_items = (String[]) info.Theaters.toArray();
+        List<String> showtime_list = new ArrayList<>();
+
+        for (int i = 0; i < all_tickets.size(); i++){
+            showtime_list.add(all_tickets.get(i).getShowTime());
+        }
+
+        List_items = showtime_list.toArray(new String[0]);
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(BookTicket.this);
         mBuilder.setTitle("Choose a showtime");
         mBuilder.setSingleChoiceItems(List_items, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 show_time_textBox.setText(List_items[which]);
+
+                if(which == -1) return;
+
+                for (int i = 0; i < all_tickets.size(); i++){
+                    if(all_tickets.get(i).getShowTime() == List_items[which]){
+                        chosen = all_tickets.get(i);
+                        break;
+                    }
+                }
+
                 dialog.dismiss();
             }
         });

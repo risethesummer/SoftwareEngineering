@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public class Order {
     String id;
-    HashMap<Product, Integer> products;
-    DateTimeFormatter purchased_time;
+    String product_ID;
+    String purchased_time;
     long total_price;
 
     public String getId() {
@@ -20,20 +20,19 @@ public class Order {
         this.id = id;
     }
 
-    public HashMap<Product, Integer> getProducts() {
-        return products;
+    public String getProducts() {
+        return product_ID;
     }
 
-    public void setProducts(HashMap<Product, Integer> products) {
-        this.products = products;
-        calculate_price();
+    public void setProducts(String product) {
+        this.product_ID = product;
     }
 
-    public DateTimeFormatter getPurchased_time() {
+    public String getPurchased_time() {
         return purchased_time;
     }
 
-    public void setPurchased_time(DateTimeFormatter purchased_time) {
+    public void setPurchased_time(String purchased_time) {
         this.purchased_time = purchased_time;
     }
 
@@ -45,11 +44,4 @@ public class Order {
         this.total_price = total_price;
     }
 
-    private void calculate_price(){
-        total_price = 0;
-        for (Map.Entry prod : this.products.entrySet() ){
-            Product product = (Product) prod.getKey();
-            total_price += product.price;
-        }
-    }
 }

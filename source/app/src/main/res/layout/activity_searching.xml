@@ -27,10 +27,9 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.163">
+        app:layout_constraintTop_toBottomOf="@+id/imageView10"
+        app:layout_constraintVertical_bias="0.02">
 
         <EditText
             android:id="@+id/search_box"
@@ -109,17 +108,15 @@
 
     <LinearLayout
         android:id="@+id/SearchList_Layout"
-        android:layout_width="374dp"
-        android:layout_height="500dp"
+        android:layout_width="371dp"
+        android:layout_height="473dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/my_frame_layout"
         android:orientation="vertical"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.934">
+        app:layout_constraintTop_toBottomOf="@+id/Search_Layout">
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

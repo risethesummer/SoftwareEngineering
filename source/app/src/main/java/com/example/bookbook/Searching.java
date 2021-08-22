@@ -55,7 +55,7 @@ public class Searching extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    execute_searching("by_name", search_box.getText().toString());
+                    execute_searching("name", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -68,7 +68,7 @@ public class Searching extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    execute_searching("by_nation", search_box.getText().toString());
+                    execute_searching("nation", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -81,7 +81,7 @@ public class Searching extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    execute_searching("by_actor", search_box.getText().toString());
+                    execute_searching("actor", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -93,7 +93,7 @@ public class Searching extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    execute_searching("by_genre", search_box.getText().toString());
+                    execute_searching("genre", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -105,7 +105,7 @@ public class Searching extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    execute_searching("by_theatre", search_box.getText().toString());
+                    execute_searching("theatre", search_box.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -117,8 +117,7 @@ public class Searching extends AppCompatActivity {
 
     void execute_searching(String filter, String data) throws IOException, JSONException {
         Vector<Movie> result = new Vector<>();
-        //TODO add searching url
-        String url = "/" + filter;
+        String url = "https://bookbook3wishes.azurewebsites.net/api/movie/" + filter + '/' + data;
 
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -162,7 +161,8 @@ public class Searching extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent movie_intent = new Intent(Searching.this, InformationMovie.class);
-                    movie_intent.putExtra("movie", list.get(finalI));
+                    Movie chosen = list.get(finalI);
+                    movie_intent.putExtra("movie", chosen);
                     startActivity(movie_intent);
                 }
             });

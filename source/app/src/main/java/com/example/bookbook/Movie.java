@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,150 +19,138 @@ import static android.support.v4.content.ContextCompat.startActivity;
 
 
 public class Movie implements Serializable {
-    String ID;
-    String Name;
-    int Year;
-    String Nation;
-    String Genre;
-    int required_Age;
-    int Duration;
-    String Description;
-    CompactPerson Director;
-    String imgUrl;
-    List<CompactPerson> Actors;
-    List<Theater> Theaters;
-    int IMDB_score;
-    String TrailerLink;
+    String id;
+    String name;
+    int year;
+    String nation;
+    String genre;
+    int requiredAge;
+    int duration;
+    String description;
+    CompactPerson director;
+    String imageID;
+    ArrayList<CompactPerson> actors;
+    int imdbStar;
+    String youtubeLink;
 
     View create_Frame(LayoutInflater inflater, Context context){
         View result = inflater.inflate(R.layout.movie_frame, null);
 
         TextView name = (TextView)result.findViewById(R.id.textView_name);
-        name.setText(this.Name);
+        name.setText(this.name);
         name.setId(ViewCompat.generateViewId());
 
         TextView nation = (TextView)result.findViewById(R.id.textView_nation);
-        nation.setText(this.Theaters.toString());
         nation.setId(ViewCompat.generateViewId());
-
-        TextView cinema = (TextView)result.findViewById(R.id.textView_cinema);
-        cinema.setText(this.Theaters.toString());
+        nation.setText(this.nation);
 
         ImageView poster = (ImageView) result.findViewById(R.id.poster);
-        Picasso.get().load(this.imgUrl).into(poster);
+        Picasso.get().load("https://bookbook3wishes.azurewebsites.net/api/image/" + this.imageID).into(poster);
 
         return result;
     };
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public int getYear() {
-        return Year;
+        return year;
     }
 
     public void setYear(int year) {
-        Year = year;
+        this.year = year;
     }
 
     public String getNation() {
-        return Nation;
+        return nation;
     }
 
     public void setNation(String nation) {
-        Nation = nation;
+        this.nation = nation;
     }
 
     public String getGenre() {
-        return Genre;
+        return genre;
     }
 
     public void setGenre(String genre) {
-        Genre = genre;
+        this.genre = genre;
     }
 
-    public int getRequired_Age() {
-        return required_Age;
+    public int getRequiredAge() {
+        return requiredAge;
     }
 
-    public void setRequired_Age(int required_Age) {
-        this.required_Age = required_Age;
+    public void setRequiredAge(int requiredAge) {
+        this.requiredAge = requiredAge;
     }
 
     public int getDuration() {
-        return Duration;
+        return duration;
     }
 
     public void setDuration(int duration) {
-        Duration = duration;
+        this.duration = duration;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public CompactPerson getDirector() {
-        return Director;
+        return director;
     }
 
     public void setDirector(CompactPerson director) {
-        Director = director;
+        this.director = director;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImageID() {
+        return imageID;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImageID(String imageID) {
+        this.imageID = imageID;
     }
 
-    public List<CompactPerson> getActors() {
-        return Actors;
+    public ArrayList<CompactPerson> getActors() {
+        return actors;
     }
 
-    public void setActors(List<CompactPerson> actors) {
-        Actors = actors;
+    public void setActors(ArrayList<CompactPerson> actors) {
+        this.actors = actors;
     }
 
-    public List<Theater> getTheaters() {
-        return Theaters;
+    public int getImdbStar() {
+        return imdbStar;
     }
 
-    public void setTheaters(List<Theater> theaters) {
-        Theaters = theaters;
+    public void setImdbStar(int imbdStar) {
+        this.imdbStar = imbdStar;
     }
 
-    public int getIMDB_score() {
-        return IMDB_score;
+    public String getYoutubeLink() {
+        return youtubeLink;
     }
 
-    public void setIMDB_score(int IMDB_score) {
-        this.IMDB_score = IMDB_score;
-    }
-
-    public String getTrailerLink() {
-        return TrailerLink;
-    }
-
-    public void setTrailerLink(String trailerLink) {
-        TrailerLink = trailerLink;
+    public void setYoutubeLink(String youtubeLink) {
+        this.youtubeLink = youtubeLink;
     }
 }
