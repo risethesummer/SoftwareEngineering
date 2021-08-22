@@ -4,10 +4,22 @@ import java.time.*;
 import java.time.format.*;
 
 public class Ticket extends Product {
-    String MovieId;
-    DateTimeFormatter showtime;
-    String TheaterId;
-    String Seat;
+    private String MovieId;
+    private DateTimeFormatter showtime;
+    private String TheaterId;
+    private String Seat;
+
+    public  Ticket(){ };
+
+    public Ticket(Ticket clone){
+        id = clone.id;
+        name = clone.name;
+        price = clone.price;
+        MovieId = clone.MovieId;
+        showtime = clone.showtime;
+        TheaterId = clone.TheaterId;
+        Seat = clone.Seat;
+    };
 
     public String getMovieId() {
         return MovieId;

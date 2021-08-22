@@ -147,23 +147,22 @@ public class Searching extends AppCompatActivity {
         });
 
         //TODO MySingleTon
+        MySingleton.getInstance(Searching.this).addToRequestQueue(req);
     }
 
     void Show_movies_list(){
-        ListIterator<Movie> iterator = list.listIterator();
-        while(iterator.hasNext()){
-            Movie movie_info = new Movie();
-            movie_info = iterator.next();
+        for (int i = 0; i < list.size(); i++) {
 
+            Movie movie_info = list.get(i);
             View Frame_movie = movie_info.create_Frame(inflater, Searching.this);
             Frame_movie.setId(ViewCompat.generateViewId());
 
-            Movie finalMovie_info = movie_info;
+            int finalI = i;
             Frame_movie.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent movie_intent = new Intent(Searching.this, InformationMovie.class);
-                    movie_intent.putExtra("movie", finalMovie_info);
+                    movie_intent.putExtra("movie", list.get(finalI));
                     startActivity(movie_intent);
                 }
             });

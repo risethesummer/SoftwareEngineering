@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class ChooseSeat extends AppCompatActivity implements View.OnClickListener {
     private HashMap<Button, Boolean> seatList = new HashMap<Button, Boolean>();
+    private HashMap<Product, Integer> tickets = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +26,24 @@ public class ChooseSeat extends AppCompatActivity implements View.OnClickListene
         set_upButtons(7, "B_");
         set_upButtons(7, "C_");
 
+        book_ticket();
+    }
+
+    private Ticket clone_ticket(String seat){
+        Ticket clone = new Ticket();
+        clone.setSeat(seat);
+
+        return clone;
+    }
+
+    private void book_ticket() {
         findViewById(R.id.Book_Button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (Map.Entry ele : seatList.entrySet() ){
                     if ((Boolean) ele.getValue() == true){
-
+                        Button seat = (Button) ele.getKey();
+                        clone_ticket(seat.getResources().getResourceEntryName(seat.getId()));
                     }
                 }
             }

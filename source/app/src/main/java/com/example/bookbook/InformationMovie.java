@@ -55,7 +55,7 @@ public class InformationMovie extends AppCompatActivity {
         rating.setRating(info.IMDB_score/2);
 
         ImageView poster = (ImageView) findViewById(R.id.Movie_poster);
-        Picasso.with(this).load(info.imgUrl).into(poster);
+        Picasso.get().load(info.imgUrl).into(poster);
     };
 
     private void Book(){

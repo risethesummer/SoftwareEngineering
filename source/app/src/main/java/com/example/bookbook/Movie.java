@@ -48,7 +48,7 @@ public class Movie implements Serializable {
         cinema.setText(this.Theaters.toString());
 
         ImageView poster = (ImageView) result.findViewById(R.id.poster);
-        Picasso.with(context).load(this.imgUrl).into(poster);
+        Picasso.get().load(this.imgUrl).into(poster);
 
         return result;
     };

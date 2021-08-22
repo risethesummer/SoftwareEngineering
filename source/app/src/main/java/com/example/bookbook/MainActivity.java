@@ -11,6 +11,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.interfaces.ItemClickListener;
+import com.denzcoskun.imageslider.models.SlideModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setup_SlideShow();
+
 
         findViewById(R.id.SearchBox).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +51,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setup_SlideShow() {
+        ImageSlider imageSlider = findViewById(R.id.Movie_Slider);
+
+        List<SlideModel> slideModelList = new ArrayList<>();
+        slideModelList.add(new SlideModel("https://wallpaperaccess.com/full/329583.jpg",""));
+        slideModelList.add(new SlideModel("https://cdn.wallpapersafari.com/46/77/tX3swr.jpg",""));
+        slideModelList.add(new SlideModel("https://wallpaperaccess.com/full/107680.jpg",""));
+        imageSlider.setImageList(slideModelList, true);
+
+        imageSlider.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemSelected(int i) {
+                Toast.makeText(MainActivity.this, "Clicked " + String.valueOf(i), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void LogOut() {
         String url = "https://bookbook3wishes.azurewebsites.net/api/account/logout/" + SignIn.user.getSessionID();
         StringRequest req = new StringRequest(Request.Method.GET, url, null, new Response.ErrorListener() {
@@ -57,5 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private SlideModel set_upSlideModel(int index){
+        SlideModel res = new SlideModel("", "movie_" + String.valueOf(index));
+
+        return res;
     }
 }

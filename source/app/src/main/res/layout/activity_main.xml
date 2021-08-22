@@ -257,10 +257,10 @@
         android:layout_height="99dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.849"
+        app:layout_constraintVertical_bias="0.762"
         app:srcCompat="@drawable/slogan" />
 
     <Button
@@ -365,5 +365,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.912" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="213dp"
+        app:layout_constraintBottom_toTopOf="@+id/line2SignUp3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2SignUp">
+
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/Movie_Slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:auto_cycle="true"
+            app:delay="0"
+            app:error_image="@android:color/white"
+            app:period="1000"
+            app:placeholder="@android:color/white" />
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

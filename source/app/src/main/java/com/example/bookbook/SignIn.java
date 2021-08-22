@@ -38,7 +38,7 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        startActivity(new Intent(SignIn.this, ChooseSeat.class));
+        startActivity(new Intent(SignIn.this, MainActivity.class));
 
         findViewById(R.id.LoginButton).setOnClickListener(new View.OnClickListener() {
             @Override
