@@ -1,6 +1,9 @@
 package com.example.bookbook;
+import android.widget.Button;
+
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Order {
@@ -23,6 +26,7 @@ public class Order {
 
     public void setProducts(HashMap<Product, Integer> products) {
         this.products = products;
+        calculate_price();
     }
 
     public DateTimeFormatter getPurchased_time() {
@@ -39,5 +43,13 @@ public class Order {
 
     public void setTotal_price(long total_price) {
         this.total_price = total_price;
+    }
+
+    private void calculate_price(){
+        total_price = 0;
+        for (Map.Entry prod : this.products.entrySet() ){
+            Product product = (Product) prod.getKey();
+            total_price += product.price;
+        }
     }
 }

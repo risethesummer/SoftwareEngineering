@@ -23,6 +23,7 @@
         android:id="@+id/textView14"
         android:layout_width="62dp"
         android:layout_height="27dp"
+        android:fontFamily="@font/tienne"
         android:text="Total:"
         android:textColor="#000000"
         android:textSize="20dp"
@@ -128,6 +129,7 @@
         android:id="@+id/ProductView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/tienne"
         android:text="Product"
         android:textColor="#000000"
         android:textSize="20dp"
@@ -143,6 +145,7 @@
         android:id="@+id/PriceView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/tienne"
         android:text="Price"
         android:textColor="#000000"
         android:textSize="20dp"
@@ -185,5 +188,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.853" />
+
+    <LinearLayout
+        android:id="@+id/Product_layout"
+        android:layout_width="241dp"
+        android:layout_height="234dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/line7"
+        app:layout_constraintEnd_toStartOf="@+id/lineInSide"
+        app:layout_constraintStart_toStartOf="@+id/view7"
+        app:layout_constraintTop_toBottomOf="@+id/ProductView">
+
+        <TextView
+            android:id="@+id/Product1"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:fontFamily="@font/tienne"
+            android:text="Product1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/Product2"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:fontFamily="@font/tienne"
+            android:text="Product2"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Price_layout"
+        android:layout_width="126dp"
+        android:layout_height="234dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/line7"
+        app:layout_constraintEnd_toEndOf="@+id/view7"
+        app:layout_constraintStart_toEndOf="@+id/lineInSide"
+        app:layout_constraintTop_toBottomOf="@+id/PriceView">
+
+        <TextView
+            android:id="@+id/Price1"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:fontFamily="@font/tienne"
+            android:text="price1"
+            android:textSize="20sp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

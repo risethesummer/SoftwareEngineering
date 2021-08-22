@@ -1,5 +1,6 @@
 package com.example.bookbook;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,10 @@ public class ChooseSeat extends AppCompatActivity implements View.OnClickListene
                         clone_ticket(seat.getResources().getResourceEntryName(seat.getId()));
                     }
                 }
+
+                Intent view_cart = new Intent(ChooseSeat.this, Cart.class);
+
+                startActivity(view_cart);
             }
         });
     }

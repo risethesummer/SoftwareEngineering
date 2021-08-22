@@ -379,7 +379,7 @@
             android:background="@drawable/my_button"
             android:drawableRight="@drawable/right_narrow_icon"
             android:fontFamily="@font/tienne"
-            android:text="Button"
+            android:text="Next"
             android:textStyle="bold" />
 
         <LinearLayout
