@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DefaultConnection"
+    },
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": "",
+      "suggestion": "true",
+      "ignored": "true"
+    },
+    "storage1": {
+      "type": "storage",
+      "connectionId": "AzureStorageConnection"
+    },
+    "storage2": {
+      "type": "storage",
+      "connectionId": "ConnectionStrings:AzureStorageConnection"
+    }
+  }
+}
