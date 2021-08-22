@@ -19,6 +19,176 @@ namespace BookBook.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BookBook.Models.Movie", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("IMDBStar")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ImageID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Nation")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("RequiredAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.Property<string>("YoutubeLink")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("BookBook.Models.MovieStaff", b =>
+                {
+                    b.Property<Guid>("MovieID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PersonID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MovieID", "PersonID");
+
+                    b.HasIndex("PersonID");
+
+                    b.ToTable("MovieStaff");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Order", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsPurchased")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PurchasedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("TotalPrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("BookBook.Models.OrderProduct", b =>
+                {
+                    b.Property<Guid>("OrderID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderID", "ProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("OrderProduct");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Person", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DayOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("ImageID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Nation")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("People");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Product", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("ID");
+
+                    b.HasAlternateKey("Name")
+                        .HasName("AlternateKey_Product");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("BookBook.Models.ResetPasswordRequest", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -33,6 +203,85 @@ namespace BookBook.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("ResetPasswordRequests");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Review", b =>
+                {
+                    b.Property<Guid>("MovieID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Star")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Theater", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Theaters");
+                });
+
+            modelBuilder.Entity("BookBook.Models.TheaterProducts", b =>
+                {
+                    b.Property<Guid>("TheaterID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Remains")
+                        .HasColumnType("int");
+
+                    b.HasKey("TheaterID", "ProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("TheaterProducts");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Ticket", b =>
+                {
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MovieID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ShowTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ProductID");
+
+                    b.HasIndex("MovieID");
+
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("BookBook.Models.UserAccount", b =>
@@ -77,6 +326,55 @@ namespace BookBook.Migrations
                     b.ToTable("UserAccounts");
                 });
 
+            modelBuilder.Entity("BookBook.Models.MovieStaff", b =>
+                {
+                    b.HasOne("BookBook.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookBook.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Order", b =>
+                {
+                    b.HasOne("BookBook.Models.UserAccount", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BookBook.Models.OrderProduct", b =>
+                {
+                    b.HasOne("BookBook.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookBook.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("BookBook.Models.ResetPasswordRequest", b =>
                 {
                     b.HasOne("BookBook.Models.UserAccount", "User")
@@ -86,6 +384,63 @@ namespace BookBook.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Review", b =>
+                {
+                    b.HasOne("BookBook.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookBook.Models.UserAccount", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BookBook.Models.TheaterProducts", b =>
+                {
+                    b.HasOne("BookBook.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookBook.Models.Theater", "Theater")
+                        .WithMany()
+                        .HasForeignKey("TheaterID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Theater");
+                });
+
+            modelBuilder.Entity("BookBook.Models.Ticket", b =>
+                {
+                    b.HasOne("BookBook.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookBook.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }
