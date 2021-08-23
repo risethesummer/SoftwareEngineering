@@ -16,12 +16,12 @@ namespace BookBook.Models
         [ForeignKey("UserID")]
         public virtual UserAccount User { get; init; }
 
+        public Guid ProductID { get; init; }
+        [ForeignKey("ProductID")]
+        public virtual Product Product { get; init;}
 
         public DateTime PurchasedTime { get; set; } = DateTime.Now;
 
         public bool IsPurchased { get; set; } = false;
-
-        [Range(0, double.MaxValue)]
-        public long TotalPrice { get; set; }
     }
 }

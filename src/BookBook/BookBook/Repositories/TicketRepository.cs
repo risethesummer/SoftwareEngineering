@@ -10,12 +10,10 @@ namespace BookBook.Repositories
     public class TicketRepository : ITicketRepository
     {
         private readonly ApplicationDbContext dbContext;
-
         public TicketRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
-
 
         public bool AddTicket(Ticket ticket)
         {
@@ -38,7 +36,12 @@ namespace BookBook.Repositories
 
         public IEnumerable<Ticket> GetTickets()
         {
-            return dbContext.Tickets.AsEnumerable();
+            return dbContext.Tickets.AsEnumerable().ToArray();
+        }
+
+        public IEnumerable<Ticket> GetTickets(Guid movieID)
+        {
+            return dbContext.Tickets.Where(a => a.MovieID == movieID).ToArray();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace BookBook.Repositories
         {
             var find = dbContext.MovieStaff.FirstOrDefault(s => s.MovieID == movieID && s.Role == role);
             if (find != null)
-                return find.Person;
+                return dbContext.People.Find(find.PersonID);
             return null;
         }
 

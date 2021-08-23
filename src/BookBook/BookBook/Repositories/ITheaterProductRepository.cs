@@ -14,6 +14,6 @@ namespace BookBook.Repositories
         TheaterProducts GetTheaterProducts(Guid theaterId, Guid pid);
         bool CheckBuyProduct(Guid theaterID, Guid pID, int amount);
         bool BuyProduct(Guid theaterID, Guid pID, int amount);
-        IEnumerable<Guid> GetTheaters(Guid pid);
+        IEnumerable<Theater> GetTheaters(Guid pid);
     }
 }

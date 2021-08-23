@@ -40,7 +40,7 @@ namespace BookBook
             };
         }
 
-        public static TicketDto AsDto(this Ticket ticket, Product product, IEnumerable<Guid> theaters)
+        public static TicketDto AsDto(this Ticket ticket, Product product, IEnumerable<TheaterDto> theaters)
         {
             return new TicketDto()
             {
@@ -48,25 +48,21 @@ namespace BookBook
                 Name = product.Name,
                 MovieID = ticket.MovieID,
                 Price = product.Price,
-                ShowTime = ticket.ShowTime.ToShortDateString(),
-                TheaterID = theaters,
+                ShowTime = ticket.ShowTime.ToString(),
+                Theaters = theaters,
+                Seat = ticket.Seat,
                 Type = product.Type
             };
         }
 
-        public static OrderDto AsDto(this Order order, IEnumerable<OrderProduct> pIDs)
+        public static OrderDto AsDto(this Order order)
         {
             return new OrderDto()
             {
                 ID = order.ID,
                 PurchasedTime = order.PurchasedTime.ToShortDateString(),
                 IsPurchased = order.IsPurchased,
-                TotalPrice = order.TotalPrice,
-                Items = pIDs.Select(o => new ItemDto()
-                {
-                    ProductID = o.ProductID,
-                    Amount = o.Amount
-                })
+                ProductID = order.ProductID
             };
         }
         public static MovieDto AsDto(this Movie movie, CompactPersonDto director, IEnumerable<CompactPersonDto> actors)

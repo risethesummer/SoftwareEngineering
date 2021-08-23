@@ -15,6 +15,11 @@ namespace BookBook.Controllers
     {
         private readonly ITheaterRepository theaterRepository;
 
+        public TheaterController(ITheaterRepository theaterRepository)
+        {
+            this.theaterRepository = theaterRepository;
+        }
+
         [HttpGet]
         public IEnumerable<TheaterDto> GetTheaters()
         {

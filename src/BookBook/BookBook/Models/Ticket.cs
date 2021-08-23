@@ -18,6 +18,9 @@ namespace BookBook.Models
         [ForeignKey("MovieID")]
         public virtual Movie Movie { get; init; }
 
+        [StringLength(5)]
+        public string Seat { get; init; }
+
         public DateTime ShowTime { get; set; }
     }
 }

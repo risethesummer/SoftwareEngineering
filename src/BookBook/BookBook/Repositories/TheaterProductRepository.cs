@@ -88,11 +88,11 @@ namespace BookBook.Repositories
             return dbContext.TheaterProducts.Find(theaterId, pid);
         }
 
-        public IEnumerable<Guid> GetTheaters(Guid pid)
+        public IEnumerable<Theater> GetTheaters(Guid pid)
         {
-            foreach (var tp in dbContext.TheaterProducts.Where(t => t.ProductID == pid))
+            foreach (var tp in dbContext.TheaterProducts.Where(t => t.ProductID == pid && t.Remains > 0).ToArray())
             {
-                yield return tp.TheaterID;
+                yield return dbContext.Theaters.Find(tp.TheaterID);
             }
         }
 

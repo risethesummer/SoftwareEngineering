@@ -54,9 +54,9 @@ namespace BookBook
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<ITheaterRepository, TheaterRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ITheaterProductRepository, TheaterProductRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IOrderProductsRepository, OrderProductsRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

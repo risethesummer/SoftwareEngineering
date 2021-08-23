@@ -11,6 +11,6 @@ namespace BookBook.Dtos.Order
 
         public Guid TheaterID { get; init; }
 
-        public IEnumerable<ItemDto> Items { get; init; }
+        public Guid ProductID { get; init; }
     }
 }

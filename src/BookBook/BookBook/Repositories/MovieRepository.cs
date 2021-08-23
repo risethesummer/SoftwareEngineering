@@ -66,7 +66,7 @@ namespace BookBook.Repositories
 
         public IEnumerable<Movie> GetTopMovies(int amount)
         {
-            return dbContext.Movies.Take(amount);
+            return dbContext.Movies.Take(amount).ToArray();
         }
 
         public bool UpdateMovie(Movie update)

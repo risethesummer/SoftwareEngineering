@@ -9,5 +9,6 @@ namespace BookBook.Repositories
         bool AddTicket(Ticket ticket);
         Ticket GetTicket(Guid id);
         IEnumerable<Ticket> GetTickets();
+        IEnumerable<Ticket> GetTickets(Guid movieID);
     }
 }

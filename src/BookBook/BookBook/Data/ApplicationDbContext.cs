@@ -23,12 +23,6 @@ namespace BookBook.Data
                     k.MovieID,
                     k.PersonID
                 });
-            modelBuilder.Entity<OrderProduct>()
-                .HasKey(o => new
-                {
-                    o.OrderID,
-                    o.ProductID
-                });
             modelBuilder.Entity<TheaterProducts>()
                 .HasKey(t => new
                 {
@@ -57,7 +51,6 @@ namespace BookBook.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderProduct> OrderProduct { get; set; }
         public DbSet<Theater> Theaters { get; set; }
         public DbSet<TheaterProducts> TheaterProducts { get; set; }
         public DbSet<Review> Reviews { get; set; }

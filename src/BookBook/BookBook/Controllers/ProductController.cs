@@ -4,6 +4,7 @@ using BookBook.Models;
 using System;
 using BookBook.Dtos.Product;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace BookBook.Controllers
@@ -52,7 +53,32 @@ namespace BookBook.Controllers
             {
                 var prod = productRepository.GetProduct(tick.ProductID);
                 var theaters = theaterProductRepository.GetTheaters(tick.ProductID);
-                yield return tick.AsDto(prod, theaters);
+                if (theaters.Any())
+                    yield return tick.AsDto(prod, theaters.Select(t => new Dtos.Theater.TheaterDto()
+                    {
+                        ID = t.ID,
+                        Name = t.Name,
+                        Location = t.Location
+                    })
+                    );
+            }
+        }
+
+        [HttpGet("ticket/{movieID}")]
+        public IEnumerable<TicketDto> GetTickets(Guid movieID)
+        {
+            foreach (var tick in ticketRepository.GetTickets(movieID))
+            {
+                var prod = productRepository.GetProduct(tick.ProductID);
+                var theaters = theaterProductRepository.GetTheaters(tick.ProductID);
+                if (theaters.Any())
+                    yield return tick.AsDto(prod, theaters.Select(t => new Dtos.Theater.TheaterDto()
+                    {
+                        ID = t.ID,
+                        Name = t.Name,
+                        Location = t.Location
+                    })
+                    );
             }
         }
 
@@ -95,7 +121,7 @@ namespace BookBook.Controllers
                     ID = Guid.NewGuid(),
                     Name = create.Name,
                     Price = create.Price,
-                    Type = create.Type
+                    Type = create.Type,
                 };
                 productRepository.AddProduct(product);
 
@@ -103,7 +129,8 @@ namespace BookBook.Controllers
                 {
                     ProductID = product.ID,
                     MovieID = create.MovieID,
-                    ShowTime = create.ShowTime
+                    ShowTime = create.ShowTime,
+                    Seat = create.Seat
                 };
                 ticketRepository.AddTicket(ticket);
 

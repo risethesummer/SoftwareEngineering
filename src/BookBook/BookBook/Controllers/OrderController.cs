@@ -16,44 +16,59 @@ namespace BookBook.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository orderRepository;
-        private readonly IOrderProductsRepository orderProductsRepository;
         private readonly ITheaterProductRepository theaterProductRepository;
         private readonly IUserActivitiesManager userActivitiesManager;
-        private readonly IProductRepository productRepository;
 
-        public OrderController(IOrderProductsRepository orderProductsRepository, IOrderRepository orderRepository,
-            ITheaterProductRepository theaterProductRepository)
+        public OrderController(IOrderRepository orderRepository,
+            ITheaterProductRepository theaterProductRepository,
+            IUserActivitiesManager userActivitiesManager)
         {
-
+            this.orderRepository = orderRepository;
+            this.theaterProductRepository = theaterProductRepository;
+            this.userActivitiesManager = userActivitiesManager;
         }
 
         [HttpGet]
         public IEnumerable<OrderDto> GetOrders()
         {
             foreach (Order order in orderRepository.GetOrders())
+                yield return order.AsDto();
+        }
+
+        [HttpPut("{oid}")]
+        public ActionResult PurchaseOrder(Guid oid, Guid sessionID)
+        {
+            if (userActivitiesManager.IsValidSession(sessionID))
             {
-                var oPs = orderProductsRepository.GetOrderProductsOfOrder(order.ID);
-                yield return order.AsDto(oPs);
+                if (orderRepository.PurchaseOrder(oid))
+                    return Ok();
             }
+            return BadRequest();
         }
         
-        [HttpGet("notPurchased/{id}")]
-        public IEnumerable<OrderDto> GetNotPurchasedOrders(Guid userId)
+        [HttpGet("notPurchased/{sessionID}")]
+        public IEnumerable<OrderDto> GetNotPurchasedOrders(Guid sessionID)
         {
-            foreach (Order order in orderRepository.GetOrdersOfUser(userId, false))
+            if (userActivitiesManager.IsValidSession(sessionID))
             {
-                var oPs = orderProductsRepository.GetOrderProductsOfOrder(order.ID);
-                yield return order.AsDto(oPs);
+                var userID = userActivitiesManager.GetUserId(sessionID);
+                foreach (Order order in orderRepository.GetOrdersOfUser(userID, false))
+                {
+                    yield return order.AsDto();
+                }
             }
         }
 
-        [HttpGet("purchased/{id}")]
-        public IEnumerable<OrderDto> GetPurchasedOrders(Guid userId)
+        [HttpGet("purchased/{sessionID}")]
+        public IEnumerable<OrderDto> GetPurchasedOrders(Guid sessionID)
         {
-            foreach (Order order in orderRepository.GetOrdersOfUser(userId, true))
+            if (userActivitiesManager.IsValidSession(sessionID))
             {
-                var oPs = orderProductsRepository.GetOrderProductsOfOrder(order.ID);
-                yield return order.AsDto(oPs);
+                var userID = userActivitiesManager.GetUserId(sessionID);
+                foreach (Order order in orderRepository.GetOrdersOfUser(userID, true))
+                {
+                    yield return order.AsDto();
+                }
             }
         }
 
@@ -67,7 +82,6 @@ namespace BookBook.Controllers
                 var order = orderRepository.GetOrder(id);
                 if (order != null)
                 {
-                    orderProductsRepository.DeleteOrderProduct(id);
                     orderRepository.DeleteOrder(id);
                     return Ok(new JsonResponse() { State = "Success" });
                 }
@@ -85,48 +99,19 @@ namespace BookBook.Controllers
             if (userActivitiesManager.IsValidSession(create.SessionID))
             {
                 var userID = userActivitiesManager.GetUserId(create.SessionID);
-
-                List<Guid> cantBuy = new();
-                
-                long totalPrice = 0;
-                foreach (var item in create.Items)
+                if (theaterProductRepository.CheckBuyProduct(create.TheaterID, create.ProductID, 1))
                 {
-                    var product = productRepository.GetProduct(item.ProductID);
-                    if (theaterProductRepository.CheckBuyProduct(create.TheaterID, item.ProductID, item.Amount))
-                        totalPrice = item.Amount * product.Price;
-                    else
-                        cantBuy.Add(item.ProductID);
-                }
-
-                Order order = new()
-                {
-                    ID = Guid.NewGuid(),
-                    UserID = userID,
-                    PurchasedTime = DateTime.Now,
-                    IsPurchased = false,
-                    TotalPrice = totalPrice
-                };
-
-                foreach (var item in create.Items)
-                {
-                    var productID = productRepository.GetProduct(item.ProductID).ID;
-                    if (theaterProductRepository.CheckBuyProduct(create.TheaterID, item.ProductID, item.Amount))
+                    Order order = new()
                     {
-                        OrderProduct orderProduct = new()
-                        {
-                            OrderID = order.ID,
-                            ProductID = productID,
-                            Amount = item.Amount
-                        };
-                        orderProductsRepository.AddOrderProduct(orderProduct);
-                    }
+                        ID = Guid.NewGuid(),
+                        UserID = userID,
+                        PurchasedTime = DateTime.Now,
+                        IsPurchased = false,
+                    };
+                    orderRepository.AddOrder(order);
+                    return Ok(new JsonResponse() { State = "Success" });
                 }
-
-                if (cantBuy.Count > 0)
-                    return Ok(cantBuy);
-                return Ok(new JsonResponse() { State = "Success" });
             }
-
             return BadRequest(new JsonResponse() { State = "Fail" });
         }
     }

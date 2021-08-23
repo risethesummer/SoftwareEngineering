@@ -77,7 +77,6 @@ namespace BookBook.Repositories
                 var find = dbContext.Orders.Find(order.ID);
                 if (find != null)
                 {
-                    find.TotalPrice = order.TotalPrice;
                     find.PurchasedTime = DateTime.Now;
                     dbContext.SaveChanges();
                     return true;
@@ -92,7 +91,21 @@ namespace BookBook.Repositories
 
         public bool PurchaseOrder(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var find = dbContext.Orders.Find(id);
+                if (find != null && !find.IsPurchased)
+                {
+                    find.IsPurchased = true;
+                    dbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
