@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2617B"
+    tools:context=".Searching">
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="316dp"
+        android:layout_height="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/bookbook_logo_3" />
+
+    <LinearLayout
+        android:id="@+id/Search_Layout"
+        android:layout_width="407dp"
+        android:layout_height="109dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView10"
+        app:layout_constraintVertical_bias="0.02">
+
+        <EditText
+            android:id="@+id/search_box"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="@drawable/my_text_field"
+            android:ems="10"
+            android:foregroundGravity="fill_vertical"
+            android:hint="Search"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="15dp" />
+
+        <LinearLayout
+            android:id="@+id/Filter"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_byName"
+                android:layout_width="73dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/my_button"
+                android:text="By name"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/button_byNation"
+                android:layout_width="201dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/my_button"
+                android:text="By Nation"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/button_byActor"
+                android:layout_width="196dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/my_button"
+                android:text="by Actor"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/button_byGenre"
+                android:layout_width="197dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/my_button"
+                android:text="By genre"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/button_byTheatre"
+                android:layout_width="213dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/my_button"
+                android:text="By Theatre"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitEnd"
+            app:srcCompat="@drawable/_024px_search_icon_svg" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/SearchList_Layout"
+        android:layout_width="371dp"
+        android:layout_height="473dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/my_frame_layout"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Search_Layout">
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
