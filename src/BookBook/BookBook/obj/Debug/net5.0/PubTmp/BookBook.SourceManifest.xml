@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<sitemanifest>
-  <IisApp path="D:\Projects\SoftwareEngineering\src\BookBook\BookBook\obj\Debug\net5.0\PubTmp\Out\" />
-  <dbfullsql path="D:\Projects\SoftwareEngineering\src\BookBook\BookBook\obj\Debug\net5.0\PubTmp\EFSQLScripts\BookBook.Data.ApplicationDbContext.sql" />
-</sitemanifest>

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="IIS Web Application Name" description="" value="BookBook3Wishes" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Projects\\SoftwareEngineering\\src\\BookBook\\BookBook\\obj\\Debug\\net5\.0\\PubTmp\\Out\\$" />
-  </parameter>
-  <parameter name="BookBook.Data.ApplicationDbContext" description="" value="Data Source=tcp:bookbookdbserver.database.windows.net,1433;Initial Catalog=BookBook_db;User Id=nghihebuonvai@bookbookdbserver;Password=Quynhshin123" tags="dbfullsql">
-    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^D:\\Projects\\SoftwareEngineering\\src\\BookBook\\BookBook\\obj\\Debug\\net5\.0\\PubTmp\\EFSQLScripts\\BookBook\.Data\.ApplicationDbContext\.sql$" />
-  </parameter>
-</parameters>
